@@ -5,18 +5,25 @@ h1, h2 {
   font-weight: lighter;
 }
 
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: lightblue;
+}
+
 #content {
   width: calc(100% - 30px);
-  margin: 10px;080;
+  margin: 10px;
   padding: 10px;
-  border: solid 1px #808;
+  border: solid 6px #808;
   font-family: sans-serif;
 }
 
 .minor-section {
   margin: 10px;
   padding: 10px;
-  border: solid 1px #A0A0A0;
+  border: dotted 5px blue;
   border-radius: 10px;
 }
 
