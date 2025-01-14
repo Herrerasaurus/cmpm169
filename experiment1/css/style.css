@@ -6,6 +6,13 @@ canvas {
     height: 100%;
 }
 
+
+.image-wrapper {
+    width: 100%x;
+    padding: 0;
+    border-radius: 10px;
+    margin-left: 400px;
+}
 /* Center the canvas element on the page */
 body {
     display: flex;
