@@ -1,79 +1,83 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// sketch.js - Taking inspiration from the piece “Gallop in Motion”, this project animates the motion of the horse to follow your mouse.
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+// Author: Celeste Herrera
+// Date: Jan 2025
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+// Utalizes code from P_2_1_1_04
+//https://editor.p5js.org/generative-design/sketches/P_2_1_1_04
+/**
+ * s                   : save png
+ */
 
-// Globals
-let myInstance;
+'use strict';
+
+var tileCountX = 16;
+var tileCountY = 10;
+var tileWidth;
+var tileHeight;
 let canvasContainer;
 var centerHorz, centerVert;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
 
-    myMethod() {
-        // code to run when method is called
-    }
+
+var drawMode = 1;
+
+
+// load in animation frames
+var anim = [];
+
+function preload (){
+  for(var i = 0; i < 12; i++){
+    anim[i] = loadImage('animation/image'+(i+1)+'.png');
+  }
+
 }
-
 function resizeScreen() {
   centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
   centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
   console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
+  resizeCanvas(1200, 600);
   // redrawCanvas(); // Redraw everything based on new size
 }
 
-// setup() function is called once when the program starts
 function setup() {
   // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
   // resize canvas is the page is resized
-
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
-
+  // ... some other stuff
   $(window).resize(function() {
     resizeScreen();
   });
   resizeScreen();
+  tileWidth = width / tileCountX;
+  tileHeight = height / tileCountY;
 }
 
-// draw() function is called repeatedly, it's the main animation loop
+
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
+  clear();
+  for (var gridY = 0; gridY < tileCountX; gridY++) {
+    for (var gridX = 0; gridX < tileCountY; gridX++) {
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
-  noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+      var posX = tileWidth * gridX + tileWidth / 2;
+      var posY = tileHeight * gridY + tileWidth / 2;
+      var frame = round((distance / 25) % 11);
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+      // calculate distance between the mouse and the image
+      var distance = dist(mouseY, mouseX, posY, posX);
+      var frame = round((distance / 25) % 11);
+      var offset = round(distance / -5);
+      
+      push();
+      translate(posX, posY);
+      image(anim[frame], offset, 0);
+      pop();
+    }
+  }
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+function keyReleased() {
+  if (key == 's' || key == 'S') saveCanvas(gd.timestamp(), 'png');
 }
