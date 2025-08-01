@@ -36,7 +36,8 @@ function resizeScreen() {
   centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
   centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
   console.log("Resizing...");
-  resizeCanvas(1200, 600);
+  resizeCanvas(canvasContainer.width(), canvasContainer.height());
+
   // redrawCanvas(); // Redraw everything based on new size
 }
 
@@ -51,6 +52,8 @@ function setup() {
     resizeScreen();
   });
   resizeScreen();
+  tileCountX = canvasContainer.width() / 75;
+  tileCountY = canvasContainer.height() / 55;
   tileWidth = width / tileCountX;
   tileHeight = height / tileCountY;
 }
